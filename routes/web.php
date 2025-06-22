@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Biodatacontroller;
-
+use App\Models\Matakuliah;
+use App\Models\prodi;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,3 +25,28 @@ Route::get('/mahasiswaa', function () {
 Route::get('/biodata', [Biodatacontroller::class, 'index']);
 Route::post('/biodata', [Biodatacontroller::class, 'proses']);
 Route::get('/mahasiswa', [BiodataController::class, 'mahasiswa']);
+Route::get('/matakuliah/create/{x}/{y}', function ($nama, $sks){
+   matakuliah::create([
+       'nama' => $nama,
+       'sks' => $sks
+   ]);
+   return "Data berhasil disimpan";
+});
+Route::get('/matakuliah/lihat', function(){
+    $matakuliah = Matakuliah::all();
+    foreach ($matakuliah as $data){
+        echo $data->id . " " . $data->nama . " " . $data->sks . "<br>";
+    }
+});
+Route::get('/prodi/create/{x}', function ($nama){
+   prodi::create([
+       'nama' => $nama
+   ]);
+   return "Data berhasil disimpan";
+});
+Route::get('/prodi/lihat', function(){
+    $prodi = prodi::all();
+    foreach ($prodi as $data){
+        echo $data->id . " " . $data->nama . "<br>";
+    }
+});
