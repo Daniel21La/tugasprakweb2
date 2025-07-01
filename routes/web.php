@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Biodatacontroller;
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MobilController;
+use App\Http\Controllers\ProdukController;
 use App\Models\Matakuliah;
 use App\Models\prodi;
 Route::get('/', function () {
@@ -50,3 +54,12 @@ Route::get('/prodi/lihat', function(){
         echo $data->id . " " . $data->nama . "<br>";
     }
 });
+Route::resource('buku', BukuController::class);
+Route::resource('mobil', MobilController::class);
+
+Route::resource('/produk', ProdukController::class)->middleware('auth'); 
+Route::get('/login', [LoginController::class, 'index'])->name('login'); 
+Route::post('/login', [LoginController::class, 'autentikasi'])->name('login.autentikasi'); 
+Route::get('/keluar', [LoginController::class, 'keluar'])->name('keluar'); 
+Route::get('/registrasi', [LoginController::class, 'registrasi'])->name('registrasi'); 
+Route::post('/registrasi', [LoginController::class, 'store'])->name('registrasi.store');
